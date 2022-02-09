@@ -1,0 +1,24 @@
+{
+  "name": "winston",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.5",
+    "mongodb": "^4.3.1",
+    "winston": "^3.5.1",
+    "winston-mongodb": "^5.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.16",
+    "@types/winston": "^2.4.4",
+    "typescript": "^4.5.5"
+  }
+}
