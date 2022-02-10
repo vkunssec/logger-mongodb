@@ -2,6 +2,7 @@ import { ConnectOptions, MongoClient, MongoOptions } from "mongodb";
 import faker from "@faker-js/faker";
 
 import { logger } from "../util/logger";
+import { sleep } from "../util/utils";
 
 export class MongoDBConnect {
     private url;
@@ -40,10 +41,8 @@ export class MongoDBConnect {
 
             // await collection.drop();
 
-            const items = this.generateFakeTest();
+            const items = await this.generateFakeTest();
             const insertedItens = await collection.insertMany(items);
-
-            await this.closeConnection(this.client);
 
             return { status: 'success', count: insertedItens.insertedCount };
         } catch (error: any) {
@@ -53,7 +52,7 @@ export class MongoDBConnect {
         }
     }
 
-    generateFakeTest() {
+    async generateFakeTest() {
         logger.info('Generate Fake Test');
         const items = [];
 
@@ -83,7 +82,12 @@ export class MongoDBConnect {
                 }
                 newDay.events.push(newEvent);
             }
+            logger.info(`push item ${newDay.id}`, {
+                id: newDay.id,
+                email: newDay.owner.email,
+            });
             items.push(newDay);
+            await sleep(100);
         }
 
         return items;

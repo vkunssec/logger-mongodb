@@ -2,7 +2,7 @@ import { MongoDBConnect } from "./common/mongodb";
 import { logger } from "./util/logger";
 
 async function testMongoDB() {
-    logger.info('test mongodb connect');
+    logger.info('[test] mongodb connect');
 
     const client = new MongoDBConnect();
     const connect = await client.openConnection();
@@ -17,19 +17,27 @@ async function testMongoDB() {
     }
 
     await client.closeConnection(connect);
-    logger.info('end test mongodb connect');
+    logger.info('[endTest] mongodb connect');
+
+    return 0;
 }
 
 (async () => {
-    logger.info('--- example info ---');
-    logger.warn('--- example warn ---');
-    logger.error('--- example error ---');
+    logger.info('[initInfo] example info');
+    logger.warn('[initWarn] example warn', {
+        function: '[index.ts]',
+        description: '[WARN] example',
+    });
+    logger.error('[initError] example error', {
+        function: '[index.ts]',
+        description: '[ERROR] example',
+    });
 
-    logger.info('init project');
+    logger.info('[example-project] init project');
 
-    await testMongoDB();
+    const _ = await testMongoDB();
 
-    logger.info('end project');
+    logger.info('[example-project] end project');
 
     process.exit(0);
 })();
