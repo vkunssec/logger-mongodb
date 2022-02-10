@@ -23,10 +23,6 @@ const winstonLogger = winston.createLogger({
         service: 'example-project',
     },
     transports: [
-        new winston.transports.Console({
-            format: customFormat,
-        }),
-
         new winston.transports.File({ filename: 'logs/error.log', level: 'error', }),
         new winston.transports.File({ filename: 'logs/logger.log', }),
         
@@ -41,5 +37,11 @@ const winstonLogger = winston.createLogger({
     ],
     format: customFormat,
 });
+
+if (process.env.NODE_ENV !== 'production') {
+    winstonLogger.add(new winston.transports.Console({
+        format: customFormat,
+    }));
+}
 
 export const logger = winstonLogger;
